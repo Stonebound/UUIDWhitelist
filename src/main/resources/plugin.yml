@@ -1,0 +1,5 @@
+name: UUIDWhitelist
+version: ${project.version}
+main: net.stonebound.uuidwhitelist.UuidWhitelist
+authors: [phit]
+website: stonebound.net
