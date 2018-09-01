@@ -4,7 +4,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerLoginEvent;
+import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 
 public class WhitelistListener implements Listener {
 
@@ -14,14 +14,11 @@ public class WhitelistListener implements Listener {
         plugin = instance;
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
-    public void onPlayerLogin(PlayerLoginEvent event) {
-        String playerName = event.getPlayer().getName();
+    @EventHandler(priority = EventPriority.NORMAL)
+    public void onPlayerLogin(AsyncPlayerPreLoginEvent event) {
+        String playerName = event.getName();
         if (!plugin.isWhitelisted(playerName)) {
-            // Bukkit.getLogger().info("[UUIDWhitelist] " + playerName + " is not whitelisted!");
-            event.disallow(PlayerLoginEvent.Result.KICK_OTHER, ChatColor.translateAlternateColorCodes('&', plugin.getKickMessage()));
-        } else {
-            // Bukkit.getLogger().info("[UUIDWhitelist] " + playerName + " is whitelisted!");
+            event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_WHITELIST, ChatColor.translateAlternateColorCodes('&', plugin.getKickMessage()));
         }
     }
 }
